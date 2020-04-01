@@ -1,0 +1,18 @@
+@font-face {
+    font-family: 'Flower';
+    src: url('./fonts/indieflower.woff2') format('woff2'),
+         url('./fonts/indieflower.woff') format('woff');
+}
+
+$body-color: red;
+
+.hello {
+    color: $body-color;
+    font-family: 'Flower';
+    // user-select: none;
+    // background: url('./image.png');
+}
+
+.blue {
+    color: blue;
+}
