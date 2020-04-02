@@ -4,9 +4,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   entry: {
     app: './src/index.js',
     print: './src/print.js',
+  },
+  devtool: 'inline-source-map', // для отладки
+  devServer: { // локальный сервер с live reload
+    contentBase: './dist',
+    writeToDisk: true, // чтобы CleanWebpackPlugin не очищал dist
   },
   output: {
     filename: '[name].bundle.js',
@@ -15,7 +21,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(), // очистка папки dist
     new HtmlWebpackPlugin({ // автоматическая генерация html-файла
-      title: 'Output Management',
+      title: 'Webpack Demo',
       minify: false,
     }),
     new MiniCssExtractPlugin(),
