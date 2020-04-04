@@ -15,8 +15,19 @@ module.exports = {
     writeToDisk: true, // чтобы CleanWebpackPlugin не очищал dist
   },
   output: {
-    filename: '[name].bundle.js',
+    filename: '[name].[contenthash].js', // [contenthash] меняется при изменении файла (для сброса кэша)
     path: path.resolve(__dirname, 'dist'),
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/, // сторонние библиотеки в отдельный файл vendors.js
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
   },
   plugins: [
     new CleanWebpackPlugin(), // очистка папки dist
@@ -24,7 +35,9 @@ module.exports = {
       title: 'Webpack Demo',
       minify: false,
     }),
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css', // сброс кэша для css
+    }),
   ],
   module: {
     rules: [
