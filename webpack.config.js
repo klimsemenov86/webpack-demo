@@ -9,10 +9,10 @@ module.exports = {
     app: './src/index.js',
     print: './src/print.js',
   },
-  devtool: 'inline-source-map', // для отладки
+  devtool: 'inline-source-map', // для отладки ('cheap-module-eval-source-map' лучше для производительности)
   devServer: { // локальный сервер с live reload
     contentBase: './dist',
-    writeToDisk: true, // чтобы CleanWebpackPlugin не очищал dist
+    writeToDisk: true, // чтобы CleanWebpackPlugin не очищал dist (но надо помнить, что такая настройка снижает скорость билда)
   },
   output: {
     filename: '[name].[contenthash].js', // [contenthash] меняется при изменении файла (для сброса кэша)
@@ -44,6 +44,7 @@ module.exports = {
       {
         test: /\.m?js$/,
         exclude: /(node_modules|bower_components)/,
+        include: path.resolve(__dirname, 'src'), // использовать babel-loader только для папки src
         use: {
           loader: 'babel-loader',
           options: {
