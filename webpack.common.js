@@ -10,14 +10,14 @@ module.exports = {
     print: './src/print.js',
   },
   output: {
-    filename: '[name].[contenthash].js', // [contenthash] меняется при изменении файла (для сброса кэша)
+    filename: '[name].[contenthash].js', // [contenthash] changes when the file is changed (cache reset)
     path: path.resolve(__dirname, 'dist'),
   },
   optimization: {
     splitChunks: {
       cacheGroups: {
         vendor: {
-          test: /[\\/]node_modules[\\/]/, // сторонние библиотеки в отдельный файл vendors.js
+          test: /[\\/]node_modules[\\/]/, // third-party libraries into separate vendors.js
           name: 'vendors',
           chunks: 'all',
         },
@@ -25,13 +25,13 @@ module.exports = {
     },
   },
   plugins: [
-    new CleanWebpackPlugin(), // очистка папки dist
-    new HtmlWebpackPlugin({ // автоматическая генерация html-файла
+    new CleanWebpackPlugin(), // clear dist folder
+    new HtmlWebpackPlugin({ // html file auto generation
       title: 'Webpack Demo',
       minify: false,
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css', // сброс кэша для css
+      filename: '[name].[contenthash].css', // css clear cache
     }),
     new WorkboxPlugin.GenerateSW({
       clientsClaim: true,
@@ -43,7 +43,7 @@ module.exports = {
       {
         test: /\.m?js$/,
         exclude: /(node_modules|bower_components)/,
-        include: path.resolve(__dirname, 'src'), // использовать babel-loader только для папки src
+        include: path.resolve(__dirname, 'src'), // use babel-loader only for the src folder
         use: {
           loader: 'babel-loader',
           options: {
@@ -54,7 +54,7 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          MiniCssExtractPlugin.loader, // css в отдельный файл
+          MiniCssExtractPlugin.loader, // css into separate file
           {
             loader: 'css-loader',
             options: {
@@ -62,8 +62,8 @@ module.exports = {
               importLoaders: 1
             }
           },
-          'postcss-loader', // для postcss-preset-env (который включает в себя autoprefixer)
-          'sass-loader' // + минифицирует стили по умолчанию
+          'postcss-loader', // for postcss-preset-env (autoprefixer included)
+          'sass-loader' // + minifies styles by default
         ],
       },
       {
